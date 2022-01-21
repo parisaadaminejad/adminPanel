@@ -31,6 +31,7 @@ export function Login() {
   const tokenDispatcher = useUserTokenStateDispatcher();
   const tokenState = useUserTokenState();
   async function handleSubmit(values) {
+    console.log(values);
     try {
       setLoading(true);
       const response = await postRequest("/login", values);
@@ -41,7 +42,7 @@ export function Login() {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log("response error" + JSON.stringify(error));
+      console.log("response error", error);
     }
   }
 

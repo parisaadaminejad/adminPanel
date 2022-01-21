@@ -8,9 +8,6 @@ message.config({
 const headers = {
   "Accept-Language": "en",
   "Content-Type": "application/json; charset=utf-8; v=1.0",
-  Authorization: `Bearer ${
-    JSON.parse(localStorage.getItem("currentUser")).token
-  }`,
 };
 export const api = create({
   baseURL: baseURL,
@@ -37,11 +34,28 @@ api.addResponseTransform((response) => {
     throw response;
   }
 });
+
 export async function getRequest(endPointUrl, queryString) {
-  return api.get(endPointUrl, queryString);
+  return api.get(endPointUrl, queryString, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("currentUser")).token
+      }`,
+    },
+  });
 }
 export async function postRequest(endPointUrl, data) {
-  return api.post(endPointUrl, data);
+  if (localStorage.getItem("currentUser")) {
+    return api.post(endPointUrl, data, {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("currentUser")).token
+        }`,
+      },
+    });
+  } else {
+    return api.post(endPointUrl, data);
+  }
 }
 export async function putRequest(endPointUrl, data) {
   return api.put(endPointUrl, data);
