@@ -1,13 +1,15 @@
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Form, Col, Row, Button, Checkbox, Input, Typography } from "antd";
 import useTitle from "hooks/useTitle";
 import { postRequest } from "api";
-import Style from "./style";
-import { useState } from "react";
 import {
   userTokenAction,
   useUserTokenStateDispatcher,
-  useUserTokenState,
 } from "context/userToken";
+import { HOME_ROUTE } from "routes/constants";
+import Style from "./style";
+
 const { Item } = Form;
 
 export function SignUp() {
@@ -15,7 +17,8 @@ export function SignUp() {
   const { Title } = Typography;
   const [confirm_term_and_conditions, setConfirmTerm] = useState(false);
   const [confirm_receive_emails, setConfirmEmails] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const navigate = useHistory();
   useTitle("sign Up");
   function onChange(e) {
     console.log(`checked = ${e.target.checked}`);
@@ -26,15 +29,15 @@ export function SignUp() {
     values.confirm_receive_emails = confirm_receive_emails;
     console.log("valu", values);
     try {
-      // setLoading(true);
+      setLoading(true);
       const response = await postRequest("/register", values);
       console.log("response", response);
       userTokenAction(tokenDispatcher, response.data);
 
-      // navigate.push(HOME_ROUTE);
-      // setLoading(false);
+      navigate.push(HOME_ROUTE);
+      setLoading(false);
     } catch (error) {
-      // setLoading(false);
+      setLoading(false);
       console.log("response error" + JSON.stringify(error));
     }
   }
@@ -48,25 +51,19 @@ export function SignUp() {
           </div>
         </Col>
         <Col span={18} className="col-right">
-          <Title
-            style={{
-              marginLeft: 80,
-              marginTop: 30,
-              textTransform: "uppercase",
-            }}
+          <Form
+            name="basic"
+            form={form}
+            onFinish={handleSubmit}
+            layout="vertical"
           >
-            sign up
-          </Title>
-          <Row gutter={16}>
-            <Col span={10} push={2} style={{ marginTop: 50 }}>
-              <Form
-                name="basic"
-                form={form}
-                onFinish={handleSubmit}
-                // onFinishFailed={onFinishFailed}
-                layout="vertical"
-                className="row-col"
-              >
+            <Row gutter={16}>
+              <Col span={10} offset={2}>
+                <Title>sign up</Title>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={10} offset={2}>
                 <Item
                   className="username"
                   label="First name"
@@ -80,62 +77,8 @@ export function SignUp() {
                 >
                   <Input placeholder="Enter your first name"></Input>
                 </Item>
-
-                <Item
-                  className="username"
-                  label="Phone number"
-                  name="phone_number"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your phone number",
-                    },
-                  ]}
-                >
-                  <Input placeholder="++33" />
-                </Item>
-                <Item
-                  className="username"
-                  label="Password"
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your password",
-                    },
-                  ]}
-                >
-                  <Input.Password placeholder="********" />
-                </Item>
-                <Item name="confirm_term_and_conditions">
-                  <Checkbox
-                    checked={confirm_term_and_conditions}
-                    onChange={(e) => setConfirmTerm(e.target.checked)}
-                    defaultChecked={false}
-                  >
-                    I have read and agree to the Torms & Conditions
-                  </Checkbox>
-                </Item>
-                <Item name="confirm_receive_emails">
-                  <Checkbox
-                    checked={confirm_receive_emails}
-                    onChange={(e) => setConfirmEmails(e.target.checked)}
-                    defaultChecked={false}
-                  >
-                    Sing up for new emails{" "}
-                  </Checkbox>
-                </Item>
-              </Form>
-            </Col>
-            <Col span={10} push={2} style={{ marginTop: 50 }}>
-              <Form
-                name="basic"
-                form={form}
-                onFinish={handleSubmit}
-                // onFinishFailed={onFinishFailed}
-                layout="vertical"
-                className="row-col"
-              >
+              </Col>
+              <Col span={10}>
                 <Item
                   className="username"
                   label="Last name"
@@ -149,7 +92,25 @@ export function SignUp() {
                 >
                   <Input placeholder="Enter your Last name" />
                 </Item>
-
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={10} offset={2}>
+                <Item
+                  className="username"
+                  label="Phone number"
+                  name="phone_number"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your phone number",
+                    },
+                  ]}
+                >
+                  <Input placeholder="++33" />
+                </Item>
+              </Col>
+              <Col span={10}>
                 <Item
                   className="username"
                   label="Email"
@@ -164,6 +125,25 @@ export function SignUp() {
                 >
                   <Input placeholder="Enter email address" />
                 </Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={10} offset={2}>
+                <Item
+                  className="username"
+                  label="Password"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password",
+                    },
+                  ]}
+                >
+                  <Input.Password placeholder="********" />
+                </Item>
+              </Col>
+              <Col span={10}>
                 <Item
                   className="username"
                   label="Confirm password"
@@ -177,27 +157,54 @@ export function SignUp() {
                 >
                   <Input.Password />
                 </Item>
-
-                <Item wrapperCol={{ offset: 18, span: 6 }}>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    style={{
-                      background: " #3bd3d3f0",
-                      color: "#ffffff",
-                      textTransform: "uppercase",
-                      width: 100,
-                      borderRadius: 6,
-                      border: "none",
-                      marginTop: 50,
-                    }}
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={10} offset={2}>
+                <Item name="confirm_term_and_conditions">
+                  <Checkbox
+                    checked={confirm_term_and_conditions}
+                    onChange={(e) => setConfirmTerm(e.target.checked)}
+                    defaultChecked={false}
                   >
-                    sing up
-                  </Button>
+                    I have read and agree to the Torms & Conditions
+                  </Checkbox>
                 </Item>
-              </Form>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={10} offset={2}>
+                <Item name="confirm_receive_emails">
+                  <Checkbox
+                    checked={confirm_receive_emails}
+                    onChange={(e) => setConfirmEmails(e.target.checked)}
+                    defaultChecked={false}
+                  >
+                    Sing up for new emails{" "}
+                  </Checkbox>
+                </Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={10} offset={19}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{
+                    background: " #3bd3d3f0",
+                    color: "#ffffff",
+                    textTransform: "uppercase",
+
+                    borderRadius: 6,
+                    border: "none",
+                    marginTop: 50,
+                  }}
+                >
+                  sing up
+                </Button>
+              </Col>
+            </Row>
+          </Form>
         </Col>
       </Row>
     </Style>

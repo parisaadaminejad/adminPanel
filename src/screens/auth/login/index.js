@@ -63,7 +63,6 @@ export function Login() {
                 form={form}
                 onFinish={handleSubmit}
                 layout="vertical"
-                // className="row-col"
                 initialValues={{ remember: false }}
               >
                 <Item

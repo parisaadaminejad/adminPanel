@@ -1,22 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  Row,
-  Col,
-  Menu,
-  Card,
-  Typography,
-  Button,
-  Modal,
-  Input,
-  Form,
-} from "antd";
+import { Row, Col, Menu, Card, Typography, Button, Modal } from "antd";
 import useTitle from "hooks/useTitle";
-import Header from "../../layout/header";
-import { getRequest, postRequest } from "api";
-import { api } from "../../utils/api";
+import Header from "layout/header";
+import { getRequest } from "api";
 import Style from "./style";
-const { Title } = Typography;
 
+const { Title } = Typography;
 const { Item } = Menu;
 
 export const Home = () => {
@@ -41,7 +30,6 @@ export const Home = () => {
   useTitle("home");
   function render() {
     return data.map((item) => {
-      console.log("item", item);
       return (
         <Col span={8}>
           <Card
@@ -51,18 +39,14 @@ export const Home = () => {
               borderRadius: 8,
               background: item.color,
               color: "#fff",
+              height: 200,
+              marginTop: 10,
+              paddingTop: 20,
             }}
           >
-            {item.title}
-            <br />
-            <br />
-            {item.body}
-            <br />
-            <br />
-            <br />
-            Sticky Notes |{item.createAt}
-            <br />
-            <br />
+            <p> {item.title}</p>
+            <p>{item.body}</p>
+            <p>Sticky Notes |{item.createAt}</p>
           </Card>
         </Col>
       );
@@ -88,9 +72,12 @@ export const Home = () => {
       <Header />
 
       <div className="site-card-wrapper">
-        <Title level={2} style={{ textTransform: "uppercase" }}>
-          all notes
-        </Title>
+        <Row>
+          {" "}
+          <Title level={2} style={{ textTransform: "uppercase" }}>
+            all notes
+          </Title>
+        </Row>
         <Row justify="end">
           <Col>
             <Button
@@ -121,149 +108,6 @@ export const Home = () => {
         </Row>
 
         <Row gutter={10}>{render()}</Row>
-
-        <Row gutter={10}>
-          <Col span={8}>
-            <Card
-
-            // bordered={false}
-            // style={{
-            //   borderRadius: 8,
-            //   background: "#ffc802",
-            //   color: "#ffffff",
-            // }}
-            >
-              {/* Sticky Notes 3
-              <br />
-              <br />
-              The total number of copies of a book,newspaper,or
-              <br />
-              other published material issued at one time.
-              <br />
-              variation occurred after some of the dition had
-              <br />
-              already been published"
-              <br />
-              <br />
-              <br />
-              Sticky Notes |2021/12/10-Mon
-              <br />
-              <br /> */}
-            </Card>
-          </Col>
-          <Col span={8}>
-            <Card
-              bordered={true}
-              style={{
-                borderRadius: 8,
-                background: "#71e9ef",
-                color: "#ffffff",
-              }}
-            >
-              Sticky Notes 3
-              <br />
-              <br />
-              The total number of copies of a book,newspaper,or
-              <br />
-              other published material issued at one time.
-              <br />
-              variation occurred after some of the dition had
-              <br />
-              already been published"
-              <br />
-              <br />
-              <br />
-              Sticky Notes |2021/12/10-Mon
-              <br />
-              <br />
-            </Card>
-          </Col>
-          <Col span={8}>
-            <Card
-              bordered={true}
-              style={{
-                borderRadius: 8,
-                background: "#ff9d6e",
-                color: "#ffffff",
-              }}
-            >
-              Sticky Notes 3
-              <br />
-              <br />
-              The total number of copies of a book,newspaper,or
-              <br />
-              other published material issued at one time.
-              <br />
-              variation occurred after some of the dition had
-              <br />
-              already been published"
-              <br />
-              <br />
-              <br />
-              Sticky Notes |2021/12/10-Mon
-              <br />
-              <br />
-            </Card>
-          </Col>
-        </Row>
-        <Row gutter={[10]}>
-          <Col span={8}>
-            <Card
-              bordered={true}
-              style={{
-                borderRadius: 8,
-                background: "#71e9ef",
-                color: "#ffffff",
-                marginTop: 10,
-              }}
-            >
-              Sticky Notes 3
-              <br />
-              <br />
-              The total number of copies of a book,newspaper,or
-              <br />
-              other published material issued at one time.
-              <br />
-              variation occurred after some of the dition had
-              <br />
-              already been published"
-              <br />
-              <br />
-              <br />
-              Sticky Notes |2021/12/10-Mon
-              <br />
-              <br />
-            </Card>
-          </Col>
-          <Col span={8}>
-            <Card
-              bordered={true}
-              style={{
-                borderRadius: 8,
-                background: "#ffc802",
-                color: "#ffffff",
-                marginTop: 10,
-              }}
-            >
-              Sticky Notes 3
-              <br />
-              <br />
-              The total number of copies of a book,newspaper,or
-              <br />
-              other published material issued at one time.
-              <br />
-              variation occurred after some of the dition had
-              <br />
-              already been published"
-              <br />
-              <br />
-              <br />
-              Sticky Notes |2021/12/10-Mon
-              <br />
-              <br />
-            </Card>
-          </Col>
-        </Row>
       </div>
     </Style>
   );

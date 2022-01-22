@@ -1,20 +1,13 @@
-// const LOCAL_STORAGE_TOKEN_KEY = "ADMIN_PANEL_TOKEN";
-// const getLocalStorageToken = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
-// export const initialState = getLocalStorageToken || "";
-
 let firstName =
   JSON.parse(localStorage.getItem("currentUser"))?.user?.first_name || "";
 
 let token = JSON.parse(localStorage.getItem("currentUser"))?.token || "";
-let lastName = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).user.last_name
-  : "";
-let email = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).user.email
-  : "";
-let phone_number = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).user.phone_number
-  : "";
+let lastName =
+  JSON.parse(localStorage.getItem("currentUser"))?.user?.last_name || "";
+
+let email = JSON.parse(localStorage.getItem("currentUser"))?.user?.email || "";
+let phone_number =
+  JSON.parse(localStorage.getItem("currentUser"))?.user?.phone_number || "";
 export const initialState = {
   token: "" || token,
   first_name: "" || firstName,
