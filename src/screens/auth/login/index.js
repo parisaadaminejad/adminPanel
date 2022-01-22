@@ -11,10 +11,9 @@ import {
 } from "antd";
 import useTitle from "hooks/useTitle";
 import { postRequest } from "api";
-import { POST_API_URL } from "./constants";
+
 import {
   useUserTokenStateDispatcher,
-  useUserTokenState,
   userTokenAction,
 } from "context/userToken";
 import { useHistory } from "react-router-dom";
@@ -29,13 +28,12 @@ export function Login() {
   const { Title } = Typography;
 
   const tokenDispatcher = useUserTokenStateDispatcher();
-  const tokenState = useUserTokenState();
+
   async function handleSubmit(values) {
-    console.log(values);
     try {
       setLoading(true);
       const response = await postRequest("/login", values);
-      console.log("response", response);
+
       userTokenAction(tokenDispatcher, response.data);
 
       navigate.push(HOME_ROUTE);
@@ -58,17 +56,14 @@ export function Login() {
         </Col>
         <Col span={18} className="col-right">
           <Row gutter={10}>
-            <Col span={18} push={6}>
+            <Col span={16} offset={4}>
               <Title>login</Title>
               <Form
                 name="basic"
                 form={form}
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
                 onFinish={handleSubmit}
-                // onFinishFailed={onFinishFailed}
                 layout="vertical"
-                className="row-col"
+                // className="row-col"
                 initialValues={{ remember: false }}
               >
                 <Item
@@ -104,20 +99,8 @@ export function Login() {
                   <Checkbox>Remember me</Checkbox>
                 </Item>
 
-                <Item wrapperCol={{ offset: 12, span: 12 }}>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={loading}
-                    style={{
-                      background: " #3bd3d3f0",
-                      color: "#000000",
-                      textTransform: "uppercase",
-                      width: 110,
-                      borderRadius: 6,
-                      border: "none",
-                    }}
-                  >
+                <Item wrapperCol={{ span: 4, alinItems: "end" }}>
+                  <Button type="primary" htmlType="submit" loading={loading}>
                     login
                   </Button>
                 </Item>

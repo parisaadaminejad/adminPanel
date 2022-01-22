@@ -2,12 +2,10 @@
 // const getLocalStorageToken = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
 // export const initialState = getLocalStorageToken || "";
 
-let firstName = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).user.first_name
-  : "";
-let token = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).token
-  : "";
+let firstName =
+  JSON.parse(localStorage.getItem("currentUser"))?.user?.first_name || "";
+
+let token = JSON.parse(localStorage.getItem("currentUser"))?.token || "";
 let lastName = localStorage.getItem("currentUser")
   ? JSON.parse(localStorage.getItem("currentUser")).user.last_name
   : "";

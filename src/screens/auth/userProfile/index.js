@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { Fragment } from "react";
+import { Fragment, useDebugValue } from "react";
 import {
   useUserTokenState,
   useUserTokenStateDispatcher,
@@ -10,7 +10,9 @@ import { POST_API_URL } from "./constants";
 import { postRequest } from "api";
 import useTitle from "hooks/useTitle";
 import { Row, Col, Button, Form, Input } from "antd";
+import { MD5 } from "./helper";
 import Style from "./style";
+
 const { Item } = Form;
 export function UserProfile() {
   const [form] = Form.useForm();
@@ -21,9 +23,9 @@ export function UserProfile() {
     try {
       const response = await postRequest(POST_API_URL, values);
       console.log("res", response);
-      userTokenAction(tokenDispatcher, response.data.user);
+      userTokenAction(tokenDispatcher, response.data);
     } catch (error) {
-      console.log("error", error);
+      console.log("error", "response error" + JSON.stringify(error));
     }
   }
   useTitle("userProfile");
@@ -32,6 +34,9 @@ export function UserProfile() {
       <Header />
       <Style>
         <div className="container">
+          <img
+            src={`https://www.gravatar.com/avatar/${MD5(userDetails.email)}`}
+          />
           <Row gutter={10}>
             <Col span={10} push={2} style={{ marginTop: 50 }}>
               <Form
@@ -43,14 +48,11 @@ export function UserProfile() {
                 className="row-col"
               >
                 <Item className="username" label="First name">
-                  <Input
-                    placeholder="enter your first name"
-                    value={userDetails.first_name}
-                  ></Input>
+                  <Input placeholder="enter your first name"></Input>
                 </Item>
 
                 <Item className="username" label="Phone number">
-                  <Input value={userDetails.phone_number} />
+                  <Input />
                 </Item>
               </Form>
             </Col>
@@ -58,20 +60,21 @@ export function UserProfile() {
               <Form
                 name="basic"
                 form={form}
-                // onFinish={handleSubmit}
+                onFinish={handleSubmit}
                 // onFinishFailed={onFinishFailed}
+                initialValues={{
+                  email: userDetails.email,
+                  userName: userDetails.first_name,
+                }}
                 layout="vertical"
                 className="row-col"
               >
                 <Item className="username" label="Last name">
-                  <Input
-                    placeholder="enter your Last name"
-                    value={userDetails.last_name}
-                  />
+                  <Input placeholder="enter your Last name" />
                 </Item>
 
                 <Item className="username" label="Email">
-                  <Input value={userDetails.last_name} />
+                  <Input />
                 </Item>
 
                 <Item wrapperCol={{ offset: 14, span: 10 }}>

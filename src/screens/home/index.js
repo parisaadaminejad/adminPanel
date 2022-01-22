@@ -40,8 +40,32 @@ export const Home = () => {
 
   useTitle("home");
   function render() {
-    return data.slice(0, 1).map((item) => {
-      return <p>{item.color}</p>;
+    return data.map((item) => {
+      console.log("item", item);
+      return (
+        <Col span={8}>
+          <Card
+            key={item.id}
+            bordered={true}
+            style={{
+              borderRadius: 8,
+              background: item.color,
+              color: "#fff",
+            }}
+          >
+            {item.title}
+            <br />
+            <br />
+            {item.body}
+            <br />
+            <br />
+            <br />
+            Sticky Notes |{item.createAt}
+            <br />
+            <br />
+          </Card>
+        </Col>
+      );
     });
   }
 
@@ -96,6 +120,8 @@ export const Home = () => {
           </Col>
         </Row>
 
+        <Row gutter={10}>{render()}</Row>
+
         <Row gutter={10}>
           <Col span={8}>
             <Card
@@ -107,7 +133,6 @@ export const Home = () => {
             //   color: "#ffffff",
             // }}
             >
-              {render()}
               {/* Sticky Notes 3
               <br />
               <br />
