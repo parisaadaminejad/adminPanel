@@ -39,6 +39,11 @@ export const Home = () => {
   }, []);
 
   useTitle("home");
+  function render() {
+    return data.slice(0, 1).map((item) => {
+      return <p>{item.color}</p>;
+    });
+  }
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -53,7 +58,7 @@ export const Home = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  // handleSubmit();
+
   return (
     <Style>
       <Header />
@@ -94,14 +99,16 @@ export const Home = () => {
         <Row gutter={10}>
           <Col span={8}>
             <Card
-              bordered={false}
-              style={{
-                borderRadius: 8,
-                background: "#ffc802",
-                color: "#ffffff",
-              }}
+
+            // bordered={false}
+            // style={{
+            //   borderRadius: 8,
+            //   background: "#ffc802",
+            //   color: "#ffffff",
+            // }}
             >
-              Sticky Notes 3
+              {render()}
+              {/* Sticky Notes 3
               <br />
               <br />
               The total number of copies of a book,newspaper,or
@@ -116,7 +123,7 @@ export const Home = () => {
               <br />
               Sticky Notes |2021/12/10-Mon
               <br />
-              <br />
+              <br /> */}
             </Card>
           </Col>
           <Col span={8}>

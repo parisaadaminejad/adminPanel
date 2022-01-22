@@ -15,8 +15,7 @@ const { Item } = Form;
 export function UserProfile() {
   const [form] = Form.useForm();
   const userDetails = useUserTokenState();
-  const history = useHistory();
-  const dispatch = useUserTokenStateDispatcher();
+
   const tokenDispatcher = useUserTokenStateDispatcher();
   async function handleSubmit(values) {
     try {

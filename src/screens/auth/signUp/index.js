@@ -67,7 +67,17 @@ export function SignUp() {
                 layout="vertical"
                 className="row-col"
               >
-                <Item className="username" label="First name" name="first_name">
+                <Item
+                  className="username"
+                  label="First name"
+                  name="first_name"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your firstName",
+                    },
+                  ]}
+                >
                   <Input placeholder="Enter your first name"></Input>
                 </Item>
 
@@ -75,11 +85,27 @@ export function SignUp() {
                   className="username"
                   label="Phone number"
                   name="phone_number"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your phone number",
+                    },
+                  ]}
                 >
                   <Input placeholder="++33" />
                 </Item>
-                <Item className="username" label="Password" name="password">
-                  <Input placeholder="********" />
+                <Item
+                  className="username"
+                  label="Password"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password",
+                    },
+                  ]}
+                >
+                  <Input.Password placeholder="********" />
                 </Item>
                 <Item name="confirm_term_and_conditions">
                   <Checkbox
@@ -110,19 +136,46 @@ export function SignUp() {
                 layout="vertical"
                 className="row-col"
               >
-                <Item className="username" label="Last name" name="last_name">
+                <Item
+                  className="username"
+                  label="Last name"
+                  name="last_name"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your lastName",
+                    },
+                  ]}
+                >
                   <Input placeholder="Enter your Last name" />
                 </Item>
 
-                <Item className="username" label="Email" name="email">
+                <Item
+                  className="username"
+                  label="Email"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                    { type: "email", message: "The input is not valid email" },
+                  ]}
+                >
                   <Input placeholder="Enter email address" />
                 </Item>
                 <Item
                   className="username"
                   label="Confirm password"
                   name="password_confirmation"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your confirmPassword!",
+                    },
+                  ]}
                 >
-                  <Input />
+                  <Input.Password />
                 </Item>
 
                 <Item wrapperCol={{ offset: 18, span: 6 }}>
