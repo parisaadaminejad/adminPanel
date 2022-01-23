@@ -37,7 +37,6 @@ export const Home = () => {
     console.log({ values });
     try {
       const response = await postRequest("notes/store", values);
-      console.log("resrrr", response.data);
       getData();
     } catch (error) {
       console.log("error", "response error" + JSON.stringify(error));

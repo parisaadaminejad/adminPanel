@@ -22,7 +22,7 @@ export function UserProfile() {
     try {
       const response = await postRequest(POST_API_URL, values);
       console.log("res", response);
-      userTokenAction(tokenDispatcher, response.data);
+      // userTokenAction(tokenDispatcher, response.data);
     } catch (error) {
       console.log("error", "response error" + JSON.stringify(error));
     }
@@ -44,11 +44,20 @@ export function UserProfile() {
               first_name: userDetails.first_name,
               last_name: userDetails.last_name,
               phone_number: userDetails.phone_number,
+              image: userDetails.image,
             }}
           >
-            <img
-              src={`https://www.gravatar.com/avatar/${MD5(userDetails.email)}`}
-            />
+            <Row gutter={10}>
+              <Col span={10} offset={6}>
+                <Item name="image">
+                  <img
+                    src={`https://www.gravatar.com/avatar/${MD5(
+                      userDetails.email
+                    )}`}
+                  />
+                </Item>
+              </Col>
+            </Row>
             <Row gutter={10}>
               <Col span={10} offset={2} style={{ marginTop: 20 }}>
                 <Item className="username" label="First name" name="first_name">
