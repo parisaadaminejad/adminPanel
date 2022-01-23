@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu, Card, Typography, Button, Modal } from "antd";
+import { Row, Col, Card, Typography, Button, Modal, Form, Input } from "antd";
 import useTitle from "hooks/useTitle";
 import Header from "layout/header";
-import { getRequest } from "api";
+import { getRequest, postRequest } from "api";
+
 import Style from "./style";
 
 const { Title } = Typography;
-const { Item } = Menu;
+const { Item } = Form;
 
 export const Home = () => {
+  const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const getData = () => {
     setLoading(true);
     getRequest(`notes/index`)
       .then((response) => {
@@ -25,7 +27,22 @@ export const Home = () => {
         console.log(error);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
+
+  async function handleAddNote(values) {
+    console.log({ values });
+    try {
+      const response = await postRequest("notes/store", values);
+      console.log("resrrr", response.data);
+      getData();
+    } catch (error) {
+      console.log("error", "response error" + JSON.stringify(error));
+    }
+  }
 
   useTitle("home");
   function render() {
@@ -63,10 +80,6 @@ export const Home = () => {
     setIsModalVisible(false);
   };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
   return (
     <Style>
       <Header />
@@ -93,16 +106,28 @@ export const Home = () => {
               Add note +
             </Button>
 
-            <Modal
-              title="ADD NOTE"
-              visible={isModalVisible}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <p>Title</p>
-
-              <p>Some contents...</p>
-              <p>Some contents...</p>
+            <Modal title="ADD NOTE" visible={isModalVisible}>
+              <Form form={form} layout="vertical" onFinish={handleAddNote}>
+                <Item label="Title" name="title">
+                  <Input placeholder="set title" type="text" />
+                </Item>
+                <Item label="choose color" name="color">
+                  <Input type="color" />
+                </Item>
+                <Item name="body">
+                  <Input type="textarea" />
+                  {/* <Input.TextArea
+                    showCount
+                    maxLength={100}
+                    style={{ height: 120 }}
+                  /> */}
+                </Item>
+                <Item>
+                  <Button type="primary" htmlType="submit" onClick={handleOk}>
+                    save note
+                  </Button>
+                </Item>
+              </Form>
             </Modal>
           </Col>
         </Row>

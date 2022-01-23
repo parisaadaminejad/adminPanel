@@ -8,6 +8,7 @@ let lastName =
 let email = JSON.parse(localStorage.getItem("currentUser"))?.user?.email || "";
 let phone_number =
   JSON.parse(localStorage.getItem("currentUser"))?.user?.phone_number || "";
+
 export const initialState = {
   token: "" || token,
   first_name: "" || firstName,

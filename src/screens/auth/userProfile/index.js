@@ -41,9 +41,9 @@ export function UserProfile() {
             className="row-col"
             initialValues={{
               email: userDetails.email,
-              firstName: userDetails.first_name,
-              lastName: userDetails.last_name,
-              phoneNamber: userDetails.phone_number,
+              first_name: userDetails.first_name,
+              last_name: userDetails.last_name,
+              phone_number: userDetails.phone_number,
             }}
           >
             <img
@@ -51,24 +51,28 @@ export function UserProfile() {
             />
             <Row gutter={10}>
               <Col span={10} offset={2} style={{ marginTop: 20 }}>
-                <Item className="username" label="First name">
+                <Item className="username" label="First name" name="first_name">
                   <Input placeholder="enter your first name"></Input>
                 </Item>
               </Col>
               <Col span={10} style={{ marginTop: 20 }}>
-                <Item className="username" label="last name">
+                <Item className="username" label="last name" name="last_name">
                   <Input placeholder="enter your last name"></Input>
                 </Item>
               </Col>
             </Row>
             <Row gutter={10}>
               <Col span={10} offset={2}>
-                <Item className="username" label="Phone number">
+                <Item
+                  className="username"
+                  label="Phone number"
+                  name="phone_number"
+                >
                   <Input />
                 </Item>
               </Col>
               <Col span={10}>
-                <Item className="username" label="Email">
+                <Item className="username" label="Email" name="email">
                   <Input />
                 </Item>
               </Col>
