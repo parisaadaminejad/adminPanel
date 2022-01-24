@@ -3,6 +3,7 @@ import { Row, Col, Card, Typography, Button, Modal, Form, Input } from "antd";
 import useTitle from "hooks/useTitle";
 import Header from "layout/header";
 import { getRequest, postRequest } from "api";
+
 import Style from "./style";
 
 const { Title } = Typography;
@@ -12,6 +13,7 @@ export const Home = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const getData = () => {
     setLoading(true);
@@ -68,7 +70,9 @@ export const Home = () => {
     });
   }
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -104,7 +108,12 @@ export const Home = () => {
               Add note +
             </Button>
 
-            <Modal title="ADD NOTE" visible={isModalVisible} footer={null}>
+            <Modal
+              title="ADD NOTE"
+              visible={isModalVisible}
+              footer={null}
+              onCancel={handleCancel}
+            >
               <Form form={form} layout="vertical" onFinish={handleAddNote}>
                 <Item label="Title" name="title">
                   <Input placeholder="set title" type="text" />
