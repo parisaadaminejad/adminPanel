@@ -3,7 +3,6 @@ import { Row, Col, Card, Typography, Button, Modal, Form, Input } from "antd";
 import useTitle from "hooks/useTitle";
 import Header from "layout/header";
 import { getRequest, postRequest } from "api";
-
 import Style from "./style";
 
 const { Title } = Typography;
@@ -105,7 +104,7 @@ export const Home = () => {
               Add note +
             </Button>
 
-            <Modal title="ADD NOTE" visible={isModalVisible}>
+            <Modal title="ADD NOTE" visible={isModalVisible} footer={null}>
               <Form form={form} layout="vertical" onFinish={handleAddNote}>
                 <Item label="Title" name="title">
                   <Input placeholder="set title" type="text" />
